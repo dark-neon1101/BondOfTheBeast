@@ -236,14 +236,6 @@ public class ModEvents {
                     if (bond.getTamingState() == 1) { // 1 = Воля ломается
                         ServerPlayerEntity master = server.getPlayerManager().getPlayer(UUID.fromString(bond.getOwnerUUID()));
 
-                        // А) Пассивная накачка инстинктов (каждые 10 секунд)
-                        if (victim.age % 200 == 0) {
-                            try {
-                                // TODO: Вызов API Shape Shifter Curse для пассивного увеличения инстинкта
-                                // Например: net.onixary.shapeShifterCurseFabric.player_form.instinct.InstinctManager.addInstinct(victim, 1.0f);
-                            } catch (Exception ignored) {}
-                        }
-
                         // Б) Невидимая цепь (Поводок воли)
                         double maxDistance = 25.0; // Дальше 25 блоков не уйти
 
