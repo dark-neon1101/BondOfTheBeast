@@ -26,7 +26,6 @@ public class DistanceToOwnerCondition {
             if (bond.hasOwner()){
                 var owner = bond.getOwnerUUID();
                 for (ServerPlayerEntity potentialOwner : entity.getServer().getPlayerManager().getPlayerList()) {
-                    PlayerBondComponent bondofowner = ModComponents.PLAYER_BOND.get(potentialOwner);
                     if (potentialOwner.getUuidAsString().equals(owner)) {
                         boolean sameDimension = entity.getWorld().getRegistryKey() == potentialOwner.getWorld().getRegistryKey();
                         double distanceSq = sameDimension ? entity.squaredDistanceTo(potentialOwner) : Double.MAX_VALUE;
