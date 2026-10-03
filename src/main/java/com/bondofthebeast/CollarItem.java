@@ -17,20 +17,21 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.onixary.shapeShifterCurseFabric.items.accessory.AccessoryItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
-public class CollarItem extends TrinketItem {
+public class CollarItem extends AccessoryItem{
     public CollarItem(Settings settings) {
         super(settings);
     }
 
     // НОВОЕ: Ошейник больше не выпадает при смерти!
     @Override
-    public TrinketEnums.DropRule getDropRule(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        return TrinketEnums.DropRule.KEEP;
+    public DropRule getDropRule(ItemStack stack, LivingEntity entity, SlotData slot) {
+        return DropRule.KEEP;
     }
 
     @Override
@@ -89,8 +90,8 @@ public class CollarItem extends TrinketItem {
     }
 
     @Override
-    public void onEquip(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        super.onEquip(stack, slot, entity);
+    public void onEquip(ItemStack stack, LivingEntity entity, SlotData slot) {
+        super.onEquip(stack, entity, slot);
         if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             if (stack.hasCustomName()) {
                 PlayerBondComponent bond = ModComponents.PLAYER_BOND.get(player);
@@ -100,8 +101,8 @@ public class CollarItem extends TrinketItem {
     }
 
     @Override
-    public void onUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        super.onUnequip(stack, slot, entity);
+    public void onUnequip(ItemStack stack, LivingEntity entity, SlotData slot) {
+        super.onUnequip(stack, entity, slot);
         if (!entity.getWorld().isClient() && entity instanceof PlayerEntity player) {
             PlayerBondComponent bond = ModComponents.PLAYER_BOND.get(player);
             bond.setPetNickname(null);
@@ -109,7 +110,7 @@ public class CollarItem extends TrinketItem {
     }
 
     @Override
-    public boolean canUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
+    public boolean canUnequip(ItemStack stack, LivingEntity entity, SlotData slot) {
         if (entity instanceof PlayerEntity player) {
             PlayerBondComponent bond = ModComponents.PLAYER_BOND.get(player);
             return !bond.hasOwner();

@@ -1,5 +1,6 @@
 package com.bondofthebeast;
 
+
 import com.bondofthebeast.block.ModBlockEntities;
 import com.bondofthebeast.block.ModBlocks;
 import net.fabricmc.api.ModInitializer;
@@ -10,6 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class BondOfTheBeast implements ModInitializer {
     public static final String MOD_ID = "bondofthebeast";
@@ -23,10 +25,16 @@ public class BondOfTheBeast implements ModInitializer {
         ModItemGroups.registerItemGroups();
         ModPackets.registerC2SPackets();
         ModEvents.registerEvents();
+        EntityConditions.register();
+        BientityConditions.register();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             ModCommands.registerCommands(dispatcher);
         });
+    }
+
+    public static Identifier identifier(String path) {
+        return new Identifier(MOD_ID, path);
     }
 
     public static void grantAdvancement(ServerPlayerEntity player, String path) {

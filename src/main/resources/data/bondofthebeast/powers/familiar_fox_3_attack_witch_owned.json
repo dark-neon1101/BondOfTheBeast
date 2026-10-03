@@ -1,0 +1,70 @@
+{
+    "type": "apoli:action_on_hit",
+    "bientity_action": {
+        "type":"apoli:actor_action",
+        "action": {
+            "type": "apoli:and",
+            "actions": [
+                {
+                    "type": "apoli:heal",
+                    "amount": -1
+                },
+                {
+                    "type": "apoli:add_velocity",
+                    "z": -0.5,
+                    "y": 0.5,
+                    "space": "local_horizontal_normalized"
+                }
+            ]
+        }
+    },
+    "bientity_condition": {
+    "type": "apoli:and",
+    "conditions": [
+        {
+            "type": "apoli:target_condition",
+            "condition": {
+                "type": "apoli:or",
+                "conditions": [
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:witch"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:vex"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:evoker"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:illusioner"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:pillager"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:vindicator"
+                    },
+                    {
+                        "type": "apoli:entity_type",
+                        "entity_type": "minecraft:ravager"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "apoli:actor_condition",
+            "condition": {
+                "type": "bondofthebeast:has_owner",
+                "inverted": true
+            }
+        }
+    ]
+},
+    "cooldown": 10
+}
