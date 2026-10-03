@@ -19,6 +19,7 @@ public interface PlayerBondComponent extends Component, AutoSyncedComponent {
     String getOwnerUUID();
     String getOwnerName();
     void setOwner(String uuid, String name);
+    void setOwnerForced(String uuid, String name);
     void clearOwner();
 
     @Nullable

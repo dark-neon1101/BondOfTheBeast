@@ -1,5 +1,6 @@
 package com.bondofthebeast.component;
 
+import com.bondofthebeast.BondOfTheBeast;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -57,8 +58,6 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
 
         if (tag.contains("TamingState")) {
             this.tamingState = tag.getInt("TamingState");
-        } else {
-            this.tamingState = this.ownerUUID.isEmpty() ? 0 : 2;
         }
 
         this.petNickname = tag.contains("PetNickname") ? tag.getString("PetNickname") : null;
@@ -103,7 +102,6 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
         tag.putString("OwnerUUID", this.ownerUUID);
         tag.putString("OwnerName", this.ownerName);
         tag.putInt("TamingState", this.tamingState);
-
         if (this.petNickname != null) tag.putString("PetNickname", this.petNickname);
         tag.putInt("BondLevel", this.bondLevel);
         tag.putInt("BondExperience", this.bondExperience);
@@ -160,6 +158,11 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
         this.ownerUUID = uuid;
         this.ownerName = name;
         this.tamingState = 2; // При стандартном контракте сразу ставим стадию полного подчинения
+        ModComponents.PLAYER_BOND.sync(this.provider);
+    }
+    @Override public void setOwnerForced(String uuid, String name) {
+        this.ownerUUID = uuid;
+        this.ownerName = name;
         ModComponents.PLAYER_BOND.sync(this.provider);
     }
 

@@ -1,0 +1,9 @@
+{
+  "bondofthebeast:infused_collar": {
+    "accessory_powers": [],
+    "all_form": {
+      "add": ["bondofthebeast:infused_collar_instinct_tick"],
+      "remove": []
+    }
+  }
+}

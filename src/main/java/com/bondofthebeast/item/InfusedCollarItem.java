@@ -18,10 +18,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import com.bondofthebeast.BondOfTheBeast;
+import net.onixary.shapeShifterCurseFabric.items.accessory.AccessoryItem;
 
 import java.util.Optional;
 
-public class InfusedCollarItem extends TrinketItem {
+public class InfusedCollarItem extends AccessoryItem {
+
+
 
     public InfusedCollarItem(Settings settings) {
         super(settings);
@@ -67,7 +71,7 @@ public class InfusedCollarItem extends TrinketItem {
 
                         // 4. Ломаем волю и привязываем к хозяину
                         bond.setTamingState(1);
-                        bond.setOwner(user.getUuidAsString(), user.getName().getString());
+                        bond.setOwnerForced(user.getUuidAsString(), user.getName().getString());
 
                         // 5. Читаем FormID зелья из классического NBT (база 1.20.1)
                         NbtCompound nbt = stack.getNbt();
@@ -108,7 +112,7 @@ public class InfusedCollarItem extends TrinketItem {
 
     // 7. Блокировка снятия
     @Override
-    public boolean canUnequip(ItemStack stack, SlotReference slot, LivingEntity entity) {
+    public boolean canUnequip(ItemStack stack, LivingEntity entity, SlotData slot) {
         if (entity instanceof PlayerEntity player) {
             PlayerBondComponent bond = ModComponents.PLAYER_BOND.get(player);
             // Если воля ломается, жертва не может снять ошейник из инвентаря Trinkets
@@ -116,6 +120,6 @@ public class InfusedCollarItem extends TrinketItem {
                 return false;
             }
         }
-        return super.canUnequip(stack, slot, entity);
+        return super.canUnequip(stack, entity, slot);
     }
 }
