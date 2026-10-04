@@ -269,5 +269,15 @@
   "text.bondofthebeast.owner_went_feral_owner": "You have lost your mind to the beast. Your pets no longer obey you!",
   "text.bondofthebeast.packet.pet_offline_chain": "You cannot enable the chain for a pet that is offline!",
   "text.bondofthebeast.packet.pet_too_far_for_chain": "The pet is too far from the bed to be chained!",
-  "text.bondofthebeast.recall_cooldown_long": "The whistle overheated due to a massive spatial recall. It needs time to recharge..."
+  "text.bondofthebeast.recall_cooldown_long": "The whistle overheated due to a massive spatial recall. It needs time to recharge...",
+  "item.bondofthebeast.lunar_oblivion_dust": "Lunar oblivion dust",
+  "item.bondofthebeast.infused_collar": "Infused collar",
+  "text.bondofthebeast.target_too_strong": "The victim resists! Use the oblivion dust.",
+  "text.bondofthebeast.already_tamed": "This beast is already tamed!",
+  "text.bondofthebeast.taming_started": "Taming began.",
+  "text.bondofthebeast.will_breaking": "Your mind darkens... Taming began.",
+  "text.bondofthebeast.taming_leash_snap": "The magic of the grimoire has brought you back to your master!",
+  "text.bondofthebeast.taming_leash_pull": "The collar pushes you back to the master",
+  "text.bondofthebeast.taming_lost_without_master": "Without the presence of the master, your mind plunges into darkness...",
+  "text.bondofthebeast.taming_escaped": "The golden apple dispersed the magic! You are free once more!"
 }
