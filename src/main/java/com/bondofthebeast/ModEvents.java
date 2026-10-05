@@ -228,8 +228,8 @@ public class ModEvents {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
 
             // --- 1. НОВАЯ ЛОГИКА: СИСТЕМА ПОДАВЛЕНИЯ ВОЛИ (Срабатывает 2 раза в секунду) ---
-            if (++tamingTickCounter >= 10) {
-                tamingTickCounter = 0;
+
+            if (++tamingTickCounter % 10 == 0) {
                 for (ServerPlayerEntity victim : server.getPlayerManager().getPlayerList()) {
                     var bond = ModComponents.PLAYER_BOND.get(victim);
 
@@ -237,20 +237,24 @@ public class ModEvents {
                         ServerPlayerEntity master = server.getPlayerManager().getPlayer(UUID.fromString(bond.getOwnerUUID()));
                         // А) Пассивная накачка инстинктов (каждые 10 секунд)
                         // Лучше суда поставить само завершение подчинения воли так как накачку можно сделать через apoli.
-                        if (victim.age % 200 == 0) {
+                        if (tamingTickCounter % 200 == 0) {
+                            BondOfTheBeast.LOGGER.info("trigger");
                             try {
+                                BondOfTheBeast.LOGGER.info("inside");
                                 var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(victim);
                                 boolean isFeral = sscComp.getCurrentForm().getBodyType() == net.onixary.shapeShifterCurseFabric.player_form.PlayerFormBodyType.FERAL;
                                 if (sscComp.getCurrentForm().getIndex() >= 2 || isFeral){
                                     bond.setTamingProgress(bond.getTamingProgress() + 1);
+                                    BondOfTheBeast.LOGGER.info("increasing");
                                 } else  {
-                                    if (bond.getTamingProgress() >0) {
+                                    if (bond.getTamingProgress() > 0) {
                                         bond.setTamingProgress(bond.getTamingProgress() - 1);
+                                        BondOfTheBeast.LOGGER.info("lowering");
                                     }
 
                                 }
                                 if (bond.getTamingProgress() > 10){
-                                    bond.setOwner(bond.getOwnerName(), bond.getOwnerUUID());
+                                    bond.setOwner(bond.getOwnerUUID(),bond.getOwnerName());
                                     victim.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_pet").formatted(Formatting.DARK_RED), false);
                                     if (master != null){
                                         master.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_owner").formatted(Formatting.GREEN), false);
@@ -270,7 +274,7 @@ public class ModEvents {
                                 Vec3d dir = mPos.subtract(vPos).normalize();
 
                                 // Мрачные партиклы вокруг жертвы
-                                if (victim.age % 10 == 0) {
+                                if (tamingTickCounter % 10 == 0) {
                                     ((ServerWorld) victim.getWorld()).spawnParticles(ParticleTypes.SQUID_INK, victim.getX(), victim.getY() + 1, victim.getZ(), 10, 0.3, 0.5, 0.3, 0.01);
                                 }
 
@@ -286,7 +290,7 @@ public class ModEvents {
                                     victim.setVelocity(vel.x + dir.x * pull, vel.y, vel.z + dir.z * pull);
                                     victim.velocityModified = true;
 
-                                    if (victim.age % 40 == 0) {
+                                    if (tamingTickCounter % 40 == 0) {
                                         victim.sendMessage(Text.translatable("text.bondofthebeast.taming_leash_pull").formatted(Formatting.RED), true);
                                         victim.getWorld().playSound(null, victim.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, SoundCategory.PLAYERS, 0.5f, 0.8f);
                                     }
@@ -294,11 +298,14 @@ public class ModEvents {
                             }
                         } else {
                             // В) Наказание, если попытался сбежать, пока хозяин оффлайн или в другом измерении
-                            if (victim.age % 100 == 0) {
+                            if (tamingTickCounter % 100 == 0) {
                                 victim.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 140, 2, false, false));
                                 victim.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 140, 0, false, false));
                                 victim.sendMessage(Text.translatable("text.bondofthebeast.taming_lost_without_master").formatted(Formatting.DARK_GRAY), true);
                             }
+                        }
+                        if (tamingTickCounter >= 200){
+                            tamingTickCounter = 0;
                         }
                     }
                 }
