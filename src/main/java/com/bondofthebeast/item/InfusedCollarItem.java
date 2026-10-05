@@ -83,8 +83,12 @@ public class InfusedCollarItem extends AccessoryItem {
                             try {
                                 var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(target);
                                 if (sscComp != null) {
-                                    // TODO: Вызови здесь метод из мода SSC, который устанавливает форму игроку.
-                                    // Скорее всего это что-то вроде sscComp.setForm(formId) или sscComp.infect(formId);
+                                    if (sscComp.getCurrentForm().FormID.getPath().equalsIgnoreCase("original_shifter")) {
+                                        var form = net.onixary.shapeShifterCurseFabric.player_form.RegPlayerForms.getPlayerForm(formId);
+                                        BondOfTheBeast.LOGGER.info("formID"+formId);
+                                        BondOfTheBeast.LOGGER.info("TheotherformID{}", form);
+                                        net.onixary.shapeShifterCurseFabric.player_form.ability.FormAbilityManager.applyForm(target, form);
+                                    }
                                 }
                             } catch (Exception ignored) {}
                         }
