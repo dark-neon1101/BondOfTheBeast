@@ -87,7 +87,7 @@ public class InfusedCollarItem extends AccessoryItem {
                                         var form = net.onixary.shapeShifterCurseFabric.player_form.RegPlayerForms.getPlayerForm(formId);
                                         BondOfTheBeast.LOGGER.info("formID"+formId);
                                         BondOfTheBeast.LOGGER.info("TheotherformID{}", form);
-                                        net.onixary.shapeShifterCurseFabric.player_form.ability.FormAbilityManager.applyForm(target, form);
+                                        net.onixary.shapeShifterCurseFabric.player_form.transform.TransformManager.handleDirectTransform(target, form, false);
                                     }
                                 }
                             } catch (Exception ignored) {}
