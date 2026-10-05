@@ -60,10 +60,14 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
         if (tag.contains("TamingState")) {
             this.tamingState = tag.getInt("TamingState");
         }
+        if (tag.contains("tamingProgress")) {
+            this.tamingProgress = tag.getInt("TamingProgress");
+        }
 
         this.petNickname = tag.contains("PetNickname") ? tag.getString("PetNickname") : null;
         this.bondLevel = Math.max(1, tag.getInt("BondLevel"));
         this.bondExperience = tag.getInt("BondExperience");
+
         this.skillPoints = tag.getInt("SkillPoints");
 
         this.unlockedSkills.clear();
@@ -103,6 +107,7 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
         tag.putString("OwnerUUID", this.ownerUUID);
         tag.putString("OwnerName", this.ownerName);
         tag.putInt("TamingState", this.tamingState);
+        tag.putInt("TamingProgress", this.tamingProgress);
         if (this.petNickname != null) tag.putString("PetNickname", this.petNickname);
         tag.putInt("BondLevel", this.bondLevel);
         tag.putInt("BondExperience", this.bondExperience);
