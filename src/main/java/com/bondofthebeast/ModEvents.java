@@ -235,7 +235,13 @@ public class ModEvents {
 
                     if (bond.getTamingState() == 1) { // 1 = Воля ломается
                         ServerPlayerEntity master = server.getPlayerManager().getPlayer(UUID.fromString(bond.getOwnerUUID()));
+                        // А) Пассивная накачка инстинктов (каждые 10 секунд)
+                        // Лучше суда поставить само завершение подчинения воли так как накачку можно сделать через apoli.
+                        if (victim.age % 200 == 0) {
+                            try {
 
+                            } catch (Exception ignored) {}
+                        }
                         // Б) Невидимая цепь (Поводок воли)
                         double maxDistance = 25.0; // Дальше 25 блоков не уйти
 
