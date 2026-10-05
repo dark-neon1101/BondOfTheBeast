@@ -4,7 +4,6 @@
   "value": 0.025,
   "duration": 1,
   "condition": {
-    "type": "apoli:constant",
-    "value": true
+    "type": "bondofthebeast:has_owner"
   }
 }
