@@ -238,25 +238,22 @@ public class ModEvents {
                         // А) Пассивная накачка инстинктов (каждые 10 секунд)
                         // Лучше суда поставить само завершение подчинения воли так как накачку можно сделать через apoli.
                         if (tamingTickCounter % 200 == 0) {
-                            BondOfTheBeast.LOGGER.info("trigger");
                             try {
-                                BondOfTheBeast.LOGGER.info("inside");
                                 var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(victim);
                                 boolean isFeral = sscComp.getCurrentForm().getBodyType() == net.onixary.shapeShifterCurseFabric.player_form.PlayerFormBodyType.FERAL;
                                 if (sscComp.getCurrentForm().getIndex() >= 2 || isFeral){
                                     bond.setTamingProgress(bond.getTamingProgress() + 1);
-                                    BondOfTheBeast.LOGGER.info("increasing");
                                 } else  {
                                     if (bond.getTamingProgress() > 0) {
                                         bond.setTamingProgress(bond.getTamingProgress() - 1);
-                                        BondOfTheBeast.LOGGER.info("lowering");
                                     }
 
                                 }
-                                if (bond.getTamingProgress() > 10){
-                                    bond.setOwner(bond.getOwnerUUID(),bond.getOwnerName());
-                                    victim.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_pet").formatted(Formatting.DARK_RED), false);
-                                    if (master != null){
+                                if (master != null){
+                                    if (bond.getTamingProgress() > 10){
+                                        bond.setOwner(bond.getOwnerUUID(),bond.getOwnerName());
+                                        ModComponents.PLAYER_BOND.get(master).addPetToRegistry(victim.getUuidAsString(), victim.getName().getString());
+                                        victim.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_pet").formatted(Formatting.DARK_RED), false);
                                         master.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_owner").formatted(Formatting.GREEN), false);
                                     }
                                 }
