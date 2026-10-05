@@ -239,7 +239,20 @@ public class ModEvents {
                         // Лучше суда поставить само завершение подчинения воли так как накачку можно сделать через apoli.
                         if (victim.age % 200 == 0) {
                             try {
-
+                                var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(victim);
+                                boolean isFeral = sscComp.getCurrentForm().getBodyType() == net.onixary.shapeShifterCurseFabric.player_form.PlayerFormBodyType.FERAL;
+                                if (sscComp.getCurrentForm().getIndex() >= 2 || isFeral){
+                                    bond.setTamingProgress(bond.getTamingProgress() + 1);
+                                } else  {
+                                    bond.setTamingProgress(bond.getTamingProgress() - 1);
+                                }
+                                if (bond.getTamingProgress() > 10){
+                                    bond.setOwner(bond.getOwnerName(), bond.getOwnerUUID());
+                                    victim.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_pet").formatted(Formatting.DARK_RED), false);
+                                    if (master != null){
+                                        master.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_owner").formatted(Formatting.GREEN), false);
+                                    }
+                                }
                             } catch (Exception ignored) {}
                         }
                         // Б) Невидимая цепь (Поводок воли)

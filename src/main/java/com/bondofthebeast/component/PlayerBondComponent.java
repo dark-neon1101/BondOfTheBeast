@@ -18,6 +18,8 @@ public interface PlayerBondComponent extends Component, AutoSyncedComponent {
 
     String getOwnerUUID();
     String getOwnerName();
+    void setTamingProgress(int progress);
+    int getTamingProgress();
     void setOwner(String uuid, String name);
     void setOwnerForced(String uuid, String name);
     void clearOwner();

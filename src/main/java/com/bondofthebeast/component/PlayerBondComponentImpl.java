@@ -19,6 +19,7 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
     private final PlayerEntity provider;
     private String ownerUUID = "";
     private String ownerName = "";
+    private int tamingProgress = 0;
     private int tamingState = 0; // 0 = Свободен, 1 = Ломается воля, 2 = Полноценный питомец
     private String petNickname = null;
     private int bondLevel = 1;
@@ -299,6 +300,8 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
 
     @Override public boolean isProtectionMode() { return protectionMode; }
 
+    @Override public int getTamingProgress() { return this.tamingProgress; }
+    @Override public void setTamingProgress(int progress) { this.tamingProgress = progress; }
     @Override public void setProtectionMode(boolean protectionMode) {
         this.protectionMode = protectionMode;
         ModComponents.PLAYER_BOND.sync(this.provider);
