@@ -244,7 +244,10 @@ public class ModEvents {
                                 if (sscComp.getCurrentForm().getIndex() >= 2 || isFeral){
                                     bond.setTamingProgress(bond.getTamingProgress() + 1);
                                 } else  {
-                                    bond.setTamingProgress(bond.getTamingProgress() - 1);
+                                    if (bond.getTamingProgress() >0) {
+                                        bond.setTamingProgress(bond.getTamingProgress() - 1);
+                                    }
+
                                 }
                                 if (bond.getTamingProgress() > 10){
                                     bond.setOwner(bond.getOwnerName(), bond.getOwnerUUID());
