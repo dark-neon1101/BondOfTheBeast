@@ -307,7 +307,10 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
     @Override public boolean isProtectionMode() { return protectionMode; }
 
     @Override public int getTamingProgress() { return this.tamingProgress; }
-    @Override public void setTamingProgress(int progress) { this.tamingProgress = progress; }
+    @Override public void setTamingProgress(int progress) {
+        this.tamingProgress = progress;
+        ModComponents.PLAYER_BOND.sync(this.provider);
+    }
     @Override public void setProtectionMode(boolean protectionMode) {
         this.protectionMode = protectionMode;
         ModComponents.PLAYER_BOND.sync(this.provider);
