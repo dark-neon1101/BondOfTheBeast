@@ -176,7 +176,8 @@ public class PlayerBondComponentImpl implements PlayerBondComponent {
         this.ownerUUID = "";
         this.ownerName = "";
         this.petNickname = null;
-        this.tamingState = 0; // Сбрасываем стадию при разрыве связи
+        this.tamingState = 0;
+        this.tamingProgress = 0;// Сбрасываем стадию при разрыве связи
         ModComponents.PLAYER_BOND.sync(this.provider);
     }
 
