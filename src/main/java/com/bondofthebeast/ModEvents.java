@@ -110,7 +110,7 @@ public class ModEvents {
                     pet.getHungerManager().add(6, 0.6f);
                     var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(pet);
                     if (sscComp.getCurrentForm().FormIndex < 2){
-                        net.onixary.shapeShifterCurseFabric.player_form.instinct.InstinctManager.applySustainedEffect(pet,"bondofthebeast:catalyst_treat",1,1);
+                        net.onixary.shapeShifterCurseFabric.player_form.instinct.InstinctManager.applySustainedEffect(pet,"bondofthebeast:catalyst_treat",1,40);
                     }
                     bond.addBondExperience(50);
                     ModComponents.PLAYER_BOND.sync(pet);
