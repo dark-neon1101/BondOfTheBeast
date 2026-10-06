@@ -109,6 +109,26 @@ public class ModEvents {
                     if (!player.getAbilities().creativeMode) foodStack.decrement(1);
                     pet.getHungerManager().add(6, 0.6f);
                     var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(pet);
+                    if (sscComp.getCurrentForm().FormIndex < 2){
+                        net.onixary.shapeShifterCurseFabric.player_form.instinct.InstinctManager.applySustainedEffect(pet,"bondofthebeast:catalyst_treat",1,1);
+                    }
+                    bond.addBondExperience(50);
+                    ModComponents.PLAYER_BOND.sync(pet);
+                    ModComponents.PLAYER_BOND.sync(player);
+                    world.playSound(null, pet.getX(), pet.getY(), pet.getZ(), SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 1.0f, 1.1f);
+                    if (pet instanceof ServerPlayerEntity sp) sp.getServerWorld().spawnParticles(ParticleTypes.HEART, pet.getX(), pet.getY() + 1.2, pet.getZ(), 12, 0.4, 0.4, 0.4, 0.15);
+                    String petName = bond.getPetNickname() != null ? bond.getPetNickname() : pet.getGameProfile().getName();
+                    player.sendMessage(Text.translatable("text.bondofthebeast.event.feed_treat_owner", petName).formatted(Formatting.AQUA), true);
+                    pet.sendMessage(Text.translatable("text.bondofthebeast.event.feed_treat_pet", player.getGameProfile().getName()).formatted(Formatting.AQUA), true);
+                    if (player instanceof ServerPlayerEntity sp) BondOfTheBeast.grantAdvancement(sp, "owner_story/treat");
+                    if (pet instanceof ServerPlayerEntity sp) BondOfTheBeast.grantAdvancement(sp, "pet_story/treat");
+                    return ActionResult.SUCCESS;
+                }
+                if (!foodStack.isEmpty() && foodStack.isOf(ModItems.ECHO_CATALYST_TREAT)) {
+                    if (world.isClient) return ActionResult.SUCCESS;
+                    if (!player.getAbilities().creativeMode) foodStack.decrement(1);
+                    pet.getHungerManager().add(6, 0.6f);
+                    var sscComp = net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent.PLAYER_FORM.get(pet);
                     if (sscComp.getCurrentForm().FormIndex == 2){
                         var form = sscComp.getCurrentForm().getIDString();
                         var newForm = form.replace("2","3");

@@ -22,7 +22,7 @@ public class ModItems {
 
     // Заглушки для будущих шагов (раскомментируем, когда создадим их классы):
      public static final Item CATALYST_TREAT = registerItem("catalyst_treat", new Item(new FabricItemSettings().maxCount(64)));
-    // public static final Item ECHO_CATALYST_TREAT = registerItem("echo_catalyst_treat", new EchoCatalystTreatItem(new FabricItemSettings().maxCount(64)));
+     public static final Item ECHO_CATALYST_TREAT = registerItem("echo_catalyst_treat", new Item(new FabricItemSettings().maxCount(64)));
     // --------------------------------------------------
 
     private static Item registerItem(String name, Item item) {
