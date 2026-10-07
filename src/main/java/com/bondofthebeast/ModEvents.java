@@ -4,6 +4,7 @@ import com.bondofthebeast.block.PetBedBlock;
 import com.bondofthebeast.block.PetBedBlockEntity;
 import com.bondofthebeast.component.ModComponents;
 import com.bondofthebeast.component.PlayerBondComponent;
+import com.bondofthebeast.item.InfusedCollarItem;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
@@ -65,7 +66,7 @@ public class ModEvents {
                     return TrinketsApi.getTrinketComponent(pet).map(c -> {
                         boolean rem = false;
                         for (var g : c.getInventory().values()) for (var inv : g.values()) for (int i = 0; i < inv.size(); i++) {
-                            if (inv.getStack(i).getItem() instanceof CollarItem) {
+                            if (inv.getStack(i).getItem() instanceof CollarItem || (inv.getStack(i).getItem() instanceof InfusedCollarItem && bond.getTamingState() != 1)) {
                                 ItemStack droppedCollar = inv.getStack(i).copy();
                                 if (droppedCollar.hasNbt()) droppedCollar.getNbt().remove("OwnerName");
                                 player.getInventory().offerOrDrop(droppedCollar);
@@ -293,7 +294,11 @@ public class ModEvents {
                                 }
                                 if (master != null){
                                     if (bond.getTamingProgress() > 10){
+                                        var expOfPet = bond.getBondExperience();
+                                        var levelOfPet = bond.getBondLevel();
                                         bond.setOwner(bond.getOwnerUUID(),bond.getOwnerName());
+                                        bond.setBondExperience(expOfPet);
+                                        bond.setBondLevel(levelOfPet);
                                         ModComponents.PLAYER_BOND.get(master).addPetToRegistry(victim.getUuidAsString(), victim.getName().getString());
                                         victim.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_pet").formatted(Formatting.DARK_RED), false);
                                         master.sendMessage(Text.translatable("text.bondofthebeast.taming_finished_owner").formatted(Formatting.GREEN), false);
@@ -340,7 +345,10 @@ public class ModEvents {
                             if (tamingTickCounter % 100 == 0) {
                                 victim.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 140, 2, false, false));
                                 victim.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 140, 0, false, false));
-                                victim.sendMessage(Text.translatable("text.bondofthebeast.taming_lost_without_master").formatted(Formatting.DARK_GRAY), true);
+                                // что бы сообщение срабатывало только 1 раз
+                                if (victim.getStatusEffect(StatusEffects.BLINDNESS)  != null) {
+                                    victim.sendMessage(Text.translatable("text.bondofthebeast.taming_lost_without_master").formatted(Formatting.DARK_GRAY), true);
+                                }
                             }
                         }
                         if (tamingTickCounter >= 200){
