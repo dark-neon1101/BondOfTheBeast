@@ -21,15 +21,10 @@ import org.jetbrains.annotations.Nullable;
 import net.onixary.shapeShifterCurseFabric.player_form.ability.PlayerFormComponent;
 import net.onixary.shapeShifterCurseFabric.player_form.ability.RegPlayerFormComponent;
 import net.onixary.shapeShifterCurseFabric.player_form.PlayerFormBodyType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 import java.util.UUID;
 
 public class ContractItem extends Item {
-    private static final Logger log = LoggerFactory.getLogger(ContractItem.class);
-
     public ContractItem(Settings settings) {
         super(settings);
     }
